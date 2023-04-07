@@ -1,0 +1,1368 @@
+$cWhite: white;
+$cBlack: rgba(10, 10, 10);
+$cGray: #535353;
+$cGreen: rgba(3, 199, 85);
+$cBgGray: #eaebe6;
+$cWineRed: #904669;
+$cOrange: rgb(217, 101, 43);
+$contentMaxWidth: 1070px;
+$navHeight: 100px;
+$cNavy: #182D41;
+
+@use 'hero-slider';
+@import url("https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=PT+Serif:wght@700&family=Poppins:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Oswald&family=PT+Serif:wght@700&family=Playfair+Display:wght@500&family=Poppins:wght@700&display=swap');
+
+
+a {
+    text-decoration: none;
+    color: #fff;
+    // background-color: #ffffff82;
+}
+
+*{ 
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    // font-family: 'Zen Kaku Gothic New', sans-serif;
+}
+
+.head {
+    width: 100vw;
+    height: 90px;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    background: $cWhite;
+
+    & .logo {
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        animation: slide-animation 2.5s;
+    }
+    
+    & .hamburger {
+        position: absolute;
+        right: 20px;
+        top: 25px;
+        width: 50px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 300;
+
+        & .hamburger__line {
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            right: 0;
+            background-color: $cBlack;
+            transition: all 0.5s;
+        }
+
+        & .hamburger__line--1 {
+            top: 5px;
+            width: 20px;
+        }
+        
+        & .hamburger__line--2 {
+            width: 30px;
+            top: 20px;
+        }
+        
+        & .hamburger__line--3 {
+            top: 35px;
+        }
+    }
+    
+    
+    
+    /*ハンバーガーがクリックされたら*/
+    .open {
+        & .hamburger__line--1 {
+        width: 40px;
+        background-color: $cWhite;
+        transform: rotate(-45deg);
+        top: 11px;
+    }
+    & .hamburger__line--2 {
+        background-color: $cWhite;
+        opacity: 0;
+    }  
+    & .hamburger__line--3 {
+        background-color: $cWhite;
+        transform: rotate(45deg);
+        top: 11px;
+      }  
+    
+    /*ハンバーガーがクリックされたら右からスライド*/  
+    & .sp-nav {
+        right: 0;
+      }
+  } 
+
+  /* 
+  sp-nav(ナビ)
+  =================================== */
+  .sp-nav {
+    position: fixed;
+    right: -100%;
+    /*ハンバーガーがクリックされる前はWindow右側に隠す*/
+    top: 0;
+    width: 90%;
+    /* 出てくるスライドメニューの幅 */
+    height: 100vh;
+    // background-color: rgba(0, 0, 0, 0.869);
+    background-color: #222222;
+    transition: all 0.5s;
+    z-index: 200;
+    overflow-y: auto;
+    /* メニューが多くなったらスクロールできるように */
+
+    & .nav-img {
+        width: 250px;
+        height: auto;
+
+        & img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    & .sp-nav-list {
+        padding: 50px 20px 0px 20px;
+        list-style: none;
+        
+        & a {
+            color: #fff;
+
+            &:hover {
+                & .sp-nav-text {
+                    border-bottom: 2px solid #fff;
+                    width: 150px;
+                    animation: slide-under .2s;
+                }
+            }
+            @keyframes slide-under {
+                0% {width: 0;
+                }
+                100% {
+                    width: 150px;
+                }
+                
+            }
+        }
+        
+        & .sp-nav-text {
+            // font-family: "Poppins", sans-serif;
+            font-family: 'Oswald', sans-serif;
+            width: 150px;
+            height: 60px;
+            padding: 10px;
+            text-align: left;
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+
+        & span {
+            & .sp-nav-service {
+                position: relative;
+                font-family: 'Oswald', sans-serif;
+                width: 100px;
+                text-align: left;
+                font-size: 2rem;
+                padding: 10px 10px 10px 50px ;
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    background-image: url('../image/nav-list.png');
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    width: 30px;
+                    height: 30px;
+                    top: 20px;
+                    left: 10px;
+                }
+
+            }
+        }
+    }
+
+    & .sns-list {
+        display: flex;
+        margin: 60px 0 0 30px;
+
+        & p {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            margin-right: 10%;
+        }
+
+        & .sns-icon {
+            & img {
+                margin: 0 10px 0 10px;
+            }
+        }
+    }
+
+  }
+  
+  /* black-bg(ハンバーガーメニュー解除用bg)*/
+  .black-bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    background-color: #000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s;
+    cursor: pointer;
+    z-index: 100;
+  }
+  
+  /*ハンバーガーメニューが開いたら表示*/
+  .open .black-bg {
+    opacity: 0.7;
+    visibility: visible;
+  }
+
+
+      //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+      @media screen and (min-width:750px) {
+        .sp-nav {
+            position: fixed;
+            right: -100%;
+            /*ハンバーガーがクリックされる前はWindow右側に隠す*/
+            top: 0;
+            width: 25%;
+            /* 出てくるスライドメニューの幅 */
+            height: 100vh;
+            // background-color: rgba(0, 0, 0, 0.869);
+            background-color: #222222;
+            transition: all 0.5s;
+            z-index: 200;
+            overflow-y: auto;
+            /* メニューが多くなったらスクロールできるように */
+        
+            & .nav-img {
+                width: 250px;
+                height: auto;
+        
+                & img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        
+            & .sp-nav-list {
+                padding: 50px 20px 0px 20px;
+                list-style: none;
+                
+                & a {
+                    color: #fff;
+        
+                    &:hover {
+                        & .sp-nav-text {
+                            border-bottom: 2px solid #fff;
+                            width: 150px;
+                            animation: slide-under .2s;
+                        }
+                    }
+                    @keyframes slide-under {
+                        0% {width: 0;
+                        }
+                        100% {
+                            width: 150px;
+                        }
+                        
+                    }
+                }
+                
+                & .sp-nav-text {
+                    // font-family: "Poppins", sans-serif;
+                    font-family: 'Oswald', sans-serif;
+                    width: 150px;
+                    height: 60px;
+                    padding: 10px;
+                    text-align: left;
+                    font-size: 2.5rem;
+                    margin: 10px 0;
+                }
+        
+                & span {
+                    & .sp-nav-service {
+                        position: relative;
+                        font-family: 'Oswald', sans-serif;
+                        width: 100px;
+                        text-align: left;
+                        font-size: 2rem;
+                        padding: 10px 10px 10px 50px ;
+        
+                        &::before {
+                            position: absolute;
+                            content: '';
+                            background-image: url('../image/nav-list.png');
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            width: 30px;
+                            height: 30px;
+                            top: 20px;
+                            left: 10px;
+                        }
+        
+                    }
+                }
+            }
+        
+            & .sns-list {
+                display: flex;
+                margin: 60px 0 0 30px;
+        
+                & p {
+                    font-family: 'Oswald', sans-serif;
+                    font-size: 2rem;
+                    color: #fff;
+                    margin-right: 10%;
+                }
+        
+                & .sns-icon {
+                    & img {
+                        margin: 0 10px 0 10px;
+                    }
+                }
+            }
+        }
+      }
+}
+
+
+// ここからTOPトップセクションの記述・・・・・・・・・・・・
+
+.about-top {
+    position: relative;
+    width: 100%;
+    height: 40vh;
+    background-image: url('../image/abouttop.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+
+    /*コンテンツを囲むラッパー要素*/
+    & .wrap{
+        width: 100%;
+        height: 40vh;
+        position:relative;/*基準要素、子の基準となる*/
+
+             
+        /*アニメーション描画用*/
+        & canvas{
+            position:absolute;/*親のブロックを基準にして相対位置に配置する*/
+            /*位置指定*/
+            top:0;
+            right:0;
+            z-index:2;/*重ね順を-1に　※1以上だとほかのコンテンツの上に被さってしまいます*/
+        }
+
+        & .top-text {
+            position: absolute;
+            width: 80%;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: $cWhite;
+            font-size: 18px;
+            z-index: 3;
+    
+            & span {
+                font-size: 35px;
+                font-weight: 700;
+                letter-spacing: 1px;
+            }
+        }
+    }
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        & {
+            position: relative;
+            width: 100%;
+            height: 55vh;
+            background-image: url('../image/abouttop.png');
+            background-position: center;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            text-align: center;
+        
+            /*コンテンツを囲むラッパー要素*/
+            & .wrap{
+                width: 100%;
+                height: 55vh;
+                position:relative;/*基準要素、子の基準となる*/
+        
+                     
+                /*アニメーション描画用*/
+                & canvas{
+                    position:absolute;/*親のブロックを基準にして相対位置に配置する*/
+                    /*位置指定*/
+                    top:0;
+                    right:0;
+                    z-index:2;/*重ね順を-1に　※1以上だとほかのコンテンツの上に被さってしまいます*/
+                }
+        
+                & .top-text {
+                    position: absolute;
+                    top: 60%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: $cWhite;
+                    font-size: 1.7rem;
+                    z-index: 3;
+            
+                    & span {
+                        font-size: 4rem;
+                        font-weight: 700;
+                        letter-spacing: 1px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.choosebox {
+    width: 100%;
+    height: 40px;
+    background-color: #222222;
+
+    & .choose-text {
+        color: $cWhite;
+        padding-left: 20px;
+        padding-top: 10px;
+    }
+}
+
+// ここからMISSIONミッションセクションの記述・・・・・・・・・・・・
+
+.mission {
+    width: 100%;
+    height: auto;
+
+    & .mission-inner {
+        transform: translateX(-100px);
+        opacity: 0;
+        transition: 1s all;
+
+        &.inview {
+            opacity: 1; 
+            transform: translateX(0);
+        }
+
+        & .mi-text {
+            & .mi-text-top {
+                font-weight: 700;
+                font-size: 30px;
+                padding-left: 5%;
+                padding: 100px 0 20px 5%;
+                & span {
+                    display: block;
+                    // color: #1B245D;
+                    color: $cNavy;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        & .under-line {
+            width: 60px;
+            height: 7px;
+            background-color: $cNavy;
+            margin-left: 5%;
+        }
+
+        & .mi-slide-text {
+            width: 90%;
+            margin: 0 auto;
+
+            & .mi-slide-topic {
+                margin: 40px 0 20px 0;
+            }
+
+            & .mi-slide-description {
+                letter-spacing: 0.1em;
+                line-height: 2.1;
+                font-size: 14px;
+            }
+        }
+    }
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        &.mission {
+            width: 100%;
+            height: auto;
+        
+            & .mission-inner {
+                & .mi-text {
+                    & .mi-text-top {
+                        font-weight: 700;
+                        font-size: 3.5rem;
+                        letter-spacing: 0.05em;
+                        font-family: 'Poppins', sans-serif;
+                        padding: 100px 0 60px 5%;
+                        & span {
+                            display: block;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+        
+                & .under-line {
+                    width: 60px;
+                    height: 7px;
+                    margin-left: 5%;
+                }
+        
+                & .mi-slide-text {
+                    width: 90%;
+                    margin: 0 auto;
+                    padding-right: 70px;
+        
+                    & .mi-slide-topic {
+                        margin: 60px 0 20px 0;
+                        font-size: 3rem;
+                        letter-spacing: 0.05em;
+                    }
+        
+                    & .mi-slide-description {
+                        letter-spacing: 0.1em;
+                        line-height: 2.1;
+                        font-size: 1.3rem;
+
+                        & .space {
+                            display: inline-block;
+                            margin: 40px 0;
+                        }
+                    }
+                }
+            }
+        }
+    }    
+}
+
+
+// ここからVISIONビジョンセクションの記述・・・・・・・・・・・・
+.vision {
+    width: 100%;
+    height: auto;
+    margin-top: 100px;
+
+    & .vision-img {
+        display: none;  
+    }
+    & .vision-sp-img {
+        display: block; 
+        width: 90%;
+        height: auto;
+        margin-left: 10%;       
+    }
+
+    & .vision-inner {
+        background-color: $cWhite;
+        width: 95%;
+        height: auto;
+        transform: translate(-100px ,-100px);
+        opacity: 0;
+        transition: 1s all;
+
+        &.inview {
+            opacity: 1; 
+            transform: translate(0, -100px);
+        }
+        
+        & .vi-text {
+            & .vi-text-top {
+                font-weight: 700;
+                font-size: 30px;
+                padding-left: 5%;
+                padding: 70px 0 20px 5%;
+                & span {
+                    display: block;
+                    color: $cNavy;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        & .under-line {
+            width: 60px;
+            height: 7px;
+            background-color: $cNavy;
+            margin-left: 5%;
+        }
+
+        & .vi-slide-text {
+            width: 90%;
+            margin: 0 auto;
+
+            & .vi-slide-topic {
+                margin: 40px 0 20px 0;
+            }
+
+            & .vi-slide-description {
+                letter-spacing: 0.1em;
+                line-height: 2.1;
+                font-size: 14px;
+            }
+        }
+    }
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        &.vision {
+            width: 100%;
+            height: auto;
+            margin-top: 100px;
+            
+            & .vision-img {
+                display: block;
+                width: 95%;
+                height: auto;
+                margin-left: 5%;        
+            }
+            & .vision-sp-img {
+                display: none;      
+            }
+
+        
+            & .vision-inner {
+                background-color: $cWhite;
+                width: 90%;
+                height: auto;
+                transform: translate(-100px ,-200px);
+                opacity: 0;
+                transition: 1s all;
+
+                &.inview {
+                    opacity: 1; 
+                    transform: translate(0, -200px);
+                }
+
+                
+                & .vi-text {
+                    & .vi-text-top {
+                        font-weight: 700;
+                        font-size: 3.5rem;
+                        font-family: 'Poppins', sans-serif;
+                        letter-spacing: 0.05em;
+                        padding: 70px 0 60px 5%;
+
+
+                        & span {
+                            display: block;
+                            color: $cNavy;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+        
+                & .under-line {
+                    width: 150px;
+                    height: 7px;
+                    background-color: $cNavy;
+                    margin-left: 5%;
+                }
+        
+                & .vi-slide-text {
+                    width: 90%;
+                    margin: 0 auto;
+        
+                    & .vi-slide-topic {
+                        margin: 60px 0 20px 0;
+                        font-size: 3rem;
+                        letter-spacing: 0.05em;
+                    }
+        
+                    & .vi-slide-description {
+                        letter-spacing: 0.1em;
+                        line-height: 2.1;
+                        font-size: 1.3rem;
+
+                        & .space {
+                            display: inline-block;
+                            margin: 40px 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.scroll {
+    position: relative;
+
+    & .scroll-bar {
+        background-color: #E8E8E8;
+        margin: 0 auto;
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: -75px;
+        height: 150px;
+        width: 1px;
+        z-index: 4;
+        overflow: hidden;
+        
+        &::after {
+            background-color: #222222;
+            content: "";
+            margin: 0 auto;
+            position: absolute;
+            right: 0;
+            left: 0;
+            top: 0;
+            height: 150px;
+            width: 1px;
+            z-index: 4;
+            animation: sb-animation 2s infinite;
+        }
+    }
+    
+    @keyframes sb-animation{
+        0%{
+            height: 0;
+        }
+        50%{
+            height: 100%;
+        }
+        100%{
+            height: 100%;
+            transform: translateY(100%);
+        }  
+    }
+}
+
+.mind {
+    background: linear-gradient($cNavy 20%, #3d5b7f 100%);
+    width: 100%;
+    height: auto;
+    padding-bottom: 200px;
+
+    & .mind-top {
+        text-align: center;
+        padding: 70px 0 50px 0;
+        color: $cWhite;
+        font-size: 35px;
+        font-weight: 700;
+        font-family: 'Poppins', sans-serif;
+
+        & span {
+            font-weight: 500;
+            font-size: 20px;
+        }
+    }
+
+    & .mind-inner {
+        width: 90%;
+        margin: 0 auto;
+        background-color: $cWhite;
+        transform: translateX(-100px);
+        opacity: 0;
+        transition: 1s all;
+
+        &.inview {
+            opacity: 1; 
+            transform: translateX(0);
+        }
+        & .mind-list {
+            padding: 20px;
+
+            &:nth-child(1) {
+                position: relative;
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    background-image: url('../image/mind1.png');
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    width: 50px;
+                    height: 50px;
+                    top: 25px;
+                    left: 10px;
+                }
+            }
+            &:nth-child(2) {
+                position: relative;
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    background-image: url('../image/mind2.png');
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    width: 50px;
+                    height: 50px;
+                    top: 25px;
+                    left: 10px;
+                }
+            }
+            &:nth-child(3) {
+                position: relative;
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    background-image: url('../image/mind3.png');
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    width: 50px;
+                    height: 50px;
+                    top: 25px;
+                    left: 10px;
+                }
+            }
+
+            & .mind-list-topic {
+                position: relative;
+                font-size: 18px;
+                padding-left: 60px;
+                margin-bottom: 20px;
+
+
+                & span {
+                    font-size: 23px;
+                    font-weight: 700;
+                }
+            }
+
+            & .mind-list-description {
+                font-size: 14px;
+                letter-spacing: 0.03em;
+
+                & span {
+                    font-weight: 600;
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+}
+
+
+.introduce {
+    width: 100%;
+    height: auto;
+    background-color: #efefef;
+    position: relative;
+    padding-bottom: 100px;
+
+    &::before {
+        position: absolute;
+        content: '';
+        width: 20%;
+        height: 100%;
+        background-color: $cWhite;
+        right: 0;
+        top: 0;
+    }
+
+    & .intro-img {
+        position: relative;
+        z-index: 2;
+        & img {
+            width: 95%;
+            height: auto;
+            padding-top: 150px;
+            z-index: 10;
+        }
+
+        & p {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;   
+            color: $cWhite;
+
+            & span {
+                font-size: 20px;
+
+            }
+        }
+    }
+
+    & .intro-inner {
+        background-color: $cWhite;
+        width: 100%;
+        height: auto;
+        position: relative;
+        z-index: 5;
+        
+        & .ii-text {
+            & .ii-text-top {
+                font-weight: 700;
+                font-size: 35px;
+                padding-left: 5%;
+                padding: 70px 0 20px 5%;
+                
+                & span {
+                    display: block;
+                    color: $cNavy;
+                    font-size: 20px;
+                }
+            }
+        }
+
+        & .under-line {
+            width: 60px;
+            height: 7px;
+            background-color: $cNavy;
+            margin-left: 5%;
+        }
+
+
+        & .ii-slide-text {
+            width: 90%;
+            margin: 0 auto;
+
+            & .ii-slide-topic {
+                margin: 40px 0 20px 0;
+            }
+
+            & .ii-slide-description {
+                letter-spacing: 0.1em;
+                line-height: 2.1;
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+    }
+
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        &.introduce {
+            width: 100%;
+            height: auto;
+            background-color: #efefef;
+            position: relative;
+            padding-bottom: 100px;
+        
+            &::before {
+                position: absolute;
+                content: '';
+                width: 20%;
+                height: 100%;
+                background-color: $cWhite;
+                right: 0;
+                top: 0;
+            }
+        
+            & .intro-img {
+                position: relative;
+                z-index: 2;
+                & img {
+                    width: 50%;
+                    height: auto;
+                    padding-top: 150px;
+                    z-index: 10;
+                }
+        
+                & p {
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;   
+                    color: $cWhite;
+        
+                    & span {
+                        font-size: 20px;
+        
+                    }
+                }
+            }
+        
+            & .intro-inner {
+                background-color: $cWhite;
+                width: 60%;
+                height: auto;
+                position: relative;
+                z-index: 1;
+                margin-left: 30%;
+                transform: translateY(-100px);
+
+
+                
+                & .ii-text {
+                    & .ii-text-top {
+                        font-weight: 700;
+                        font-size: 5rem;
+                        padding-left: 5%;
+                        padding: 100px 0 20px 5%;
+                        & span {
+                            display: block;
+                            color: $cNavy;
+                            font-size: 2rem;
+                        }
+                    }
+                }
+        
+                & .under-line {
+                    width: 150px;
+                    height: 7px;
+                    background-color: $cNavy;
+                    margin-left: 5%;
+                }
+        
+        
+                & .ii-slide-text {
+                    width: 90%;
+                    margin: 0 auto;
+                    padding-bottom: 200px;
+        
+                    & .ii-slide-topic {
+                        margin: 40px 0 20px 0;
+                        font-size: 1.6rem;
+                    }
+        
+                    & .ii-slide-description {
+                        letter-spacing: 0.1em;
+                        line-height: 2.1;
+                        font-size: 1.4rem;
+                        font-weight: 400;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ここからInfo会社情報セクションの記述・・・・・・・・・・・・
+
+.info {
+    width: 100%;
+    height: auto;
+    position: relative;
+
+    &::before {
+        position: absolute;
+        content: '';
+        width: 20%;
+        height: 100%;
+        background-color: $cNavy;
+        right: 0;
+        top: 0;
+    }
+
+    & .info-inner {
+        & .info-inner-text {
+            & .info-inner-text-top {
+                font-weight: 700;
+                font-size: 35px;
+                padding-left: 5%;
+                padding: 100px 0 20px 5%;
+                font-family: 'Poppins', sans-serif;
+
+                & span {
+                    display: block;
+                    color: $cNavy;
+                    font-size: 20px;
+                }
+            }
+        }
+
+        & .under-line {
+            width: 60px;
+            height: 7px;
+            background-color: $cNavy;
+            margin-left: 5%;
+        }
+
+        & .map {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            margin: 50px auto;
+        }
+
+        & .outline-table {
+            padding: 0 0 100px 0;
+            position: relative;
+            z-index: 10;
+            display: block;
+            
+            & .table-list-all {
+                background-color: $cWhite;
+                width: 100%;
+                padding: 0 5%;
+                & tr {
+                    & th {
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+                        vertical-align: text-top;
+                        width: 35%;
+                        font-size: 1.1rem;
+                    }
+                    
+                    & td {
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+                        padding: 40px 0 30px 0;
+                        vertical-align: text-top;
+                        width: 80%;
+                        font-size: 1.1rem;
+                    }
+
+                }
+            }
+
+            & .outline-logo {
+                & img {
+                    display: none;
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 10px;
+                    // box-shadow: 1px 1px 5px 1px #2222226f;
+                    transform: translate(50%, 10px);
+                }
+            }
+        }
+    }
+
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        &.info {
+            width: 100%;
+            height: auto;
+            position: relative;
+        
+            &::before {
+                position: absolute;
+                content: '';
+                width: 20%;
+                height: 100%;
+                background-color: $cNavy;
+                right: 0;
+                top: 0;
+            }
+        
+            & .info-inner {
+                & .info-inner-text {
+                    & .info-inner-text-top {
+                        font-weight: 700;
+                        font-size: 3.5rem;
+                        padding-left: 5%;
+                        padding: 100px 0 20px 5%;
+                        & span {
+                            display: block;
+                            color: $cNavy;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+        
+                & .under-line {
+                    width: 150px;
+                    height: 7px;
+                    background-color: $cNavy;
+                    margin-left: 5%;
+                }
+        
+                & .map {
+                    position: relative;
+                    z-index: 10;
+                    width: 50%;
+                    margin: 50px 5%;
+                }
+        
+                & .outline-table {
+                    padding: 0 0 100px 0;
+                    position: relative;
+                    z-index: 10;
+                    display: flex;
+                    justify-content: space-between;
+                    
+                    & .table-list-all {
+                        background-color: $cWhite;
+                        width: 45%;
+                        & tr {
+                            & th {
+                                border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+                                vertical-align: text-top;
+                                width: 35%;
+                                font-size: 1.1rem;
+                            }
+                            
+                            & td {
+                                border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+                                padding: 40px 0 30px 0;
+                                vertical-align: text-top;
+                                width: 80%;
+                                font-size: 1.1rem;
+                            }
+        
+                        }
+                    }
+
+                    & .outline-logo {
+                        & img {
+                            display: block;
+                            width: 350px;
+                            height: 350px;
+                            border-radius: 10px;
+                            box-shadow: 1px 1px 5px 1px #2222226f;
+                            transform: translate(-350px,100px);
+                        }
+                    }
+                }
+            }
+        } 
+    }
+}
+
+
+// ここからバックボタンの記述・・・・・・・・・・・・
+.back-top {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    bottom: 15px;
+    right: 15px;
+    background-color: #22222291;
+    transform: rotate(-90deg);
+    opacity: 0;
+    transition: opacity 1s;
+    z-index: 9999;
+
+    &::before {
+        position: absolute;
+        content: '>';
+        width: 50px;
+        height: 50px;
+        font-size: 50px;
+        top: -2px;
+        left: 27px;
+        color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+
+// ここからコンタクトcontactセクションの記述・・・・・・・・・・・・
+
+.contact {
+    text-align: center;
+
+    & .contact-1 {
+        position: relative;
+        border: $cNavy 2px solid;
+        padding: 20px 30px;
+        margin: 30px 20px;
+        font-size: 30px;
+        font-weight: 700;
+
+        &::before {
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 25px;
+            top: -2.3px;
+            left: -2px;
+            background: $cWhite;
+            border-top: $cWhite 3px solid;
+            border-right: $cNavy 2px solid;
+            border-left: $cWhite 2px solid;
+            border-bottom: $cNavy 2px solid;
+        }
+        &::after {
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 25px;
+            bottom: -3px;
+            right: -2px;
+            background: $cWhite;
+            border-top: $cNavy 2px solid;
+            border-right: $cWhite 2px solid;
+            border-left: $cNavy 2px solid;
+            border-bottom: $cWhite 4px solid;
+        }
+
+        &:nth-child(2) {
+            background: $cNavy;
+            color: $cWhite;
+        }
+        & span {
+            font-size: 18px;
+            font-weight: 500;
+
+        }
+    }
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        &.contact {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        
+            & .contact-1 {
+                width: 40%;
+                position: relative;
+                border: #182D41 2px solid;
+                padding: 20px 30px;
+                margin: 100px 20px;
+                font-size: 30px;
+                font-weight: 700;
+        
+                &::before {
+                    position: absolute;
+                    content: '';
+                    width: 25px;
+                    height: 25px;
+                    top: -2.3px;
+                    left: -2px;
+                    background: $cWhite;
+                    border-top: $cWhite 3px solid;
+                    border-right: #182D41 2px solid;
+                    border-left: $cWhite 2px solid;
+                    border-bottom: #182D41 2px solid;
+                }
+                &::after {
+                    position: absolute;
+                    content: '';
+                    width: 25px;
+                    height: 25px;
+                    bottom: -3px;
+                    right: -2px;
+                    background: $cWhite;
+                    border-top: #182D41 2px solid;
+                    border-right: $cWhite 2px solid;
+                    border-left: #182D41 2px solid;
+                    border-bottom: $cWhite 4px solid;
+                }
+        
+                &:nth-child(2) {
+                    background: #182D41;
+                    color: $cWhite;
+                }
+                & span {
+                    font-size: 18px;
+                    font-weight: 500;
+        
+                }
+            }
+        }
+    }
+}

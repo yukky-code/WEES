@@ -1,0 +1,934 @@
+$cWhite: white;
+$cBlack: rgba(10, 10, 10);
+$cGray: #535353;
+$cGreen: rgba(3, 199, 85);
+$cBgGray: #eaebe6;
+$cWineRed: #904669;
+$cOrange: rgb(217, 101, 43);
+$contentMaxWidth: 1070px;
+$navHeight: 100px;
+$cNavy: #182D41;
+
+
+@use 'hero-slider';
+@import url("https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=PT+Serif:wght@700&family=Poppins:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Oswald&family=PT+Serif:wght@700&family=Playfair+Display:wght@500&family=Poppins:wght@700&display=swap');
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+*{ 
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    // font-family: 'Zen Kaku Gothic New', sans-serif;
+}
+
+.head {
+    width: 100vw;
+    height: 90px;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255);
+
+    & .logo {
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        animation: slide-animation 2.5s;
+    }
+    
+    & .hamburger {
+        position: absolute;
+        right: 20px;
+        top: 25px;
+        width: 50px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 300;
+
+        & .hamburger__line {
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            right: 0;
+            background-color: $cBlack;
+            transition: all 0.5s;
+        }
+
+        & .hamburger__line--1 {
+            top: 5px;
+            width: 20px;
+        }
+        
+        & .hamburger__line--2 {
+            width: 30px;
+            top: 20px;
+        }
+        
+        & .hamburger__line--3 {
+            top: 35px;
+        }
+    }
+    
+    
+    
+    /*ハンバーガーがクリックされたら*/
+    .open {
+        & .hamburger__line--1 {
+        width: 40px;
+        background-color: $cWhite;
+        transform: rotate(-45deg);
+        top: 11px;
+    }
+    & .hamburger__line--2 {
+        background-color: $cWhite;
+        opacity: 0;
+    }  
+    & .hamburger__line--3 {
+        background-color: $cWhite;
+        transform: rotate(45deg);
+        top: 11px;
+      }  
+    
+    /*ハンバーガーがクリックされたら右からスライド*/  
+    & .sp-nav {
+        right: 0;
+      }
+  } 
+
+  /* 
+  sp-nav(ナビ)
+  =================================== */
+  .sp-nav {
+    position: fixed;
+    right: -100%;
+    /*ハンバーガーがクリックされる前はWindow右側に隠す*/
+    top: 0;
+    width: 90%;
+    /* 出てくるスライドメニューの幅 */
+    height: 100vh;
+    // background-color: rgba(0, 0, 0, 0.869);
+    background-color: #222222;
+    transition: all 0.5s;
+    z-index: 200;
+    overflow-y: auto;
+    /* メニューが多くなったらスクロールできるように */
+
+    & .nav-img {
+        width: 250px;
+        height: auto;
+
+        & img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    & .sp-nav-list {
+        padding: 50px 20px 0px 20px;
+        list-style: none;
+        
+        & a {
+            color: #fff;
+
+            &:hover {
+                & .sp-nav-text {
+                    border-bottom: 2px solid #fff;
+                    width: 150px;
+                    animation: slide-under .2s;
+                }
+            }
+            @keyframes slide-under {
+                0% {width: 0;
+                }
+                100% {
+                    width: 150px;
+                }
+                
+            }
+        }
+        
+        & .sp-nav-text {
+            // font-family: "Poppins", sans-serif;
+            font-family: 'Oswald', sans-serif;
+            width: 150px;
+            height: 60px;
+            padding: 10px;
+            text-align: left;
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+
+        & span {
+            & .sp-nav-service {
+                position: relative;
+                font-family: 'Oswald', sans-serif;
+                width: 100px;
+                text-align: left;
+                font-size: 2rem;
+                padding: 10px 10px 10px 50px ;
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    background-image: url('../image/nav-list.png');
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    width: 30px;
+                    height: 30px;
+                    top: 20px;
+                    left: 10px;
+                }
+
+            }
+        }
+    }
+
+    & .sns-list {
+        display: flex;
+        margin: 60px 0 0 30px;
+
+        & p {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            color: #fff;
+            margin-right: 10%;
+        }
+
+        & .sns-icon {
+            & img {
+                margin: 0 10px 0 10px;
+            }
+        }
+    }
+
+  }
+  
+  /* black-bg(ハンバーガーメニュー解除用bg)*/
+  .black-bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+    background-color: #000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s;
+    cursor: pointer;
+    z-index: 100;
+  }
+  
+  /*ハンバーガーメニューが開いたら表示*/
+  .open .black-bg {
+    opacity: 0.7;
+    visibility: visible;
+  }
+
+
+      //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+      @media screen and (min-width:750px) {
+        .sp-nav {
+            position: fixed;
+            right: -100%;
+            /*ハンバーガーがクリックされる前はWindow右側に隠す*/
+            top: 0;
+            width: 25%;
+            /* 出てくるスライドメニューの幅 */
+            height: 100vh;
+            // background-color: rgba(0, 0, 0, 0.869);
+            background-color: #222222;
+            transition: all 0.5s;
+            z-index: 200;
+            overflow-y: auto;
+            /* メニューが多くなったらスクロールできるように */
+        
+            & .nav-img {
+                width: 250px;
+                height: auto;
+        
+                & img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        
+            & .sp-nav-list {
+                padding: 50px 20px 0px 20px;
+                list-style: none;
+                
+                & a {
+                    color: #fff;
+        
+                    &:hover {
+                        & .sp-nav-text {
+                            border-bottom: 2px solid #fff;
+                            width: 150px;
+                            animation: slide-under .2s;
+                        }
+                    }
+                    @keyframes slide-under {
+                        0% {width: 0;
+                        }
+                        100% {
+                            width: 150px;
+                        }
+                        
+                    }
+                }
+                
+                & .sp-nav-text {
+                    // font-family: "Poppins", sans-serif;
+                    font-family: 'Oswald', sans-serif;
+                    width: 150px;
+                    height: 60px;
+                    padding: 10px;
+                    text-align: left;
+                    font-size: 2.5rem;
+                    margin: 10px 0;
+                }
+        
+                & span {
+                    & .sp-nav-service {
+                        position: relative;
+                        font-family: 'Oswald', sans-serif;
+                        width: 100px;
+                        text-align: left;
+                        font-size: 2rem;
+                        padding: 10px 10px 10px 50px ;
+        
+                        &::before {
+                            position: absolute;
+                            content: '';
+                            background-image: url('../image/nav-list.png');
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            width: 30px;
+                            height: 30px;
+                            top: 20px;
+                            left: 10px;
+                        }
+        
+                    }
+                }
+            }
+        
+            & .sns-list {
+                display: flex;
+                margin: 60px 0 0 30px;
+        
+                & p {
+                    font-family: 'Oswald', sans-serif;
+                    font-size: 2rem;
+                    color: #fff;
+                    margin-right: 10%;
+                }
+        
+                & .sns-icon {
+                    & img {
+                        margin: 0 10px 0 10px;
+                    }
+                }
+            }
+        }
+      }
+}
+
+
+.service-top {
+    position: relative;
+    width: 100%;
+    height: 40vh;
+    background-image: url('../image/servicetop.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+
+    /*コンテンツを囲むラッパー要素*/
+    & .wrap{
+        width: 100%;
+        height: 40vh;
+        position:relative;/*基準要素、子の基準となる*/
+
+             
+        /*アニメーション描画用*/
+        & canvas{
+            position:absolute;/*親のブロックを基準にして相対位置に配置する*/
+            /*位置指定*/
+            top:0;
+            right:0;
+            z-index:2;/*重ね順を-1に　※1以上だとほかのコンテンツの上に被さってしまいます*/
+        }
+
+        & .top-text {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: $cWhite;
+            font-size: 18px;
+            z-index: 3;
+    
+            & span {
+                font-size: 35px;
+                font-weight: 700;
+                letter-spacing: 1px;
+            }
+        }
+    }
+
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        & {
+            position: relative;
+            width: 100%;
+            height: 55vh;
+            background-image: url('../image/servicetop.png');
+            background-position: center;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            text-align: center;
+        
+            /*コンテンツを囲むラッパー要素*/
+            & .wrap{
+                width: 100%;
+                height: 55vh;
+                position:relative;/*基準要素、子の基準となる*/
+        
+                     
+                /*アニメーション描画用*/
+                & canvas{
+                    position:absolute;/*親のブロックを基準にして相対位置に配置する*/
+                    /*位置指定*/
+                    top:0;
+                    right:0;
+                    z-index:2;/*重ね順を-1に　※1以上だとほかのコンテンツの上に被さってしまいます*/
+                }
+        
+                & .top-text {
+                    position: absolute;
+                    top: 60%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: $cWhite;
+                    font-size: 1.7rem;
+                    z-index: 3;
+            
+                    & span {
+                        font-size: 4rem;
+                        font-weight: 700;
+                        letter-spacing: 1px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.choosebox {
+    width: 100%;
+    height: 40px;
+    background-color: #222222;
+
+    & .choose-text {
+        color: $cWhite;
+        padding-left: 20px;
+        padding-top: 10px;
+    }
+}
+
+
+// ここからMISSIONミッションセクションの記述・・・・・・・・・・・・
+
+.marketing {
+    width: 100%;
+    height: auto;
+
+    & .marketing-inner {
+        & .mi-text {
+            & .mi-text-top {
+                font-weight: 700;
+                font-size: 35px;
+                padding-left: 5%;
+                padding: 100px 0 20px 5%;
+                font-family: "Poppins", sans-serif;
+                & span {
+                    display: block;
+                    color: $cNavy;
+                    font-size: 20px;
+                }
+            }
+        }
+
+        & .under-line {
+            width: 60px;
+            height: 7px;
+            background-color: $cNavy;
+            margin-left: 5%;
+        }
+
+        & .mi-slide-text {
+            width: 90%;
+            margin: 0 auto;
+
+            & .mi-slide-description {
+                letter-spacing: 0.1em;
+                line-height: 2.1;
+                font-size: 14px;
+                margin-top: 40px;
+            }
+        }
+    }
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        & {
+            width: 100%;
+            height: auto;
+        
+            & .marketing-inner {
+                & .mi-text {
+                    & .mi-text-top {
+                        font-weight: 700;
+                        font-size: 3.5rem;
+                        padding-left: 5%;
+                        padding: 100px 0 60px 5%;
+                        font-family: 'Poppins', sans-serif;
+
+                        & span {
+                            display: block;
+                            color: $cNavy;
+                            font-size: 1.5rem;
+                        }
+                    }
+                }
+        
+                & .under-line {
+                    width: 150px;
+                    height: 7px;
+                    background-color: $cNavy;
+                    margin-left: 5%;
+                }
+        
+                & .mi-slide-text {
+                    width: 90%;
+                    margin: 0 5%;
+
+        
+                    & .mi-slide-description {
+                        letter-spacing: 0.1em;
+                        line-height: 2.1;
+                        font-size: 1.4rem;
+                        margin-top: 40px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// ここから事業領域businessセクションの記述
+
+.service-business {
+    width: 100%;
+    height: auto;
+    margin: 150px 0 0 0;
+    background: #EFEFEF;
+
+    & .business-inner {
+
+        & .business-list {
+            & .bl-text {
+                & .bl-img {
+                    margin-left: 5%;
+                }
+
+                & .bl-text-list {
+                    display: block;
+                    width: 90%;
+                    margin: 0 auto;
+                    background: $cWhite;
+                    padding: 50px 20px;
+                    margin-bottom: 30px;
+                    opacity: 0;
+                    transform: translate(-300px ,-100px);
+                    transition: 1s all;
+            
+                    &.inview {
+                        opacity: 1; 
+                        transform: translate(0, -100px);
+                    }
+            
+
+                    &:nth-child(2) {
+                        margin-bottom: 0;
+                    }
+
+                    & .bl-text-topic {
+                        font-size: 28px;
+                        font-weight: 700;
+                        margin-bottom: 30px;
+                    }
+
+                    & .bl-description {
+                        font-size: 18px;
+                        line-height: 35px;
+                        letter-spacing: 1px;
+                    }
+                }
+            }
+
+            & .business-detail-dot {
+                padding-left: 10%;
+                transform: translateY(-50px);
+                & img {
+                    width: 25%;
+
+                }
+            }
+        }
+    }
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        & {
+            width: 100%;
+            height: auto;
+            margin: 150px 0 0 0;
+            background: #EFEFEF;
+        
+            & .business-inner {
+                display: flex;
+                flex-wrap: wrap;
+        
+                & .business-list {
+                    width: 50vw;
+                    & .bl-text {
+                        & .bl-img {
+                            margin-left: 5%;
+                        }
+        
+                        & .bl-text-list {
+                            width: 70%;
+                            margin: 0 5%;
+                            background: $cWhite;
+                            padding: 50px 20px;
+                            margin-bottom: 30px;
+                            opacity: 0;
+                            transform: translate(-300px ,-100px);
+                            transition: 1s all;
+                    
+                            &.inview {
+                                opacity: 1; 
+                                transform: translate(0, -100px);
+                            }
+        
+                            &:nth-child(2) {
+                                margin-bottom: 0;
+                            }
+        
+                            & .bl-text-topic {
+                                font-size: 28px;
+                                font-weight: 700;
+                                margin-bottom: 30px;
+                            }
+        
+                            & .bl-description {
+                                font-size: 18px;
+                                line-height: 35px;
+                                letter-spacing: 1px;
+                            }
+                        }
+                    }
+        
+                    & .business-detail-dot {
+                        padding-left: 10%;
+                        transform: translateY(-50px);
+                        & img {
+                            width: 25%;
+        
+                        }
+                    }
+                }
+            }   
+        }
+    }
+}
+
+.service-plan {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: #EFEFEF;
+    padding: 70px 20px;
+
+    & .sp-text {
+        & .sp-text-top {
+            font-weight: 700;
+            font-size: 35px;
+            padding-left: 5%;
+            padding: 0px 0 60px 0;
+            font-family: 'Poppins', sans-serif;
+        }
+    }
+
+    & .service-plan-list-all {
+
+        & .service-plan-list {
+            width: 90%;
+            margin: 0 auto;
+            & img {
+                border-radius: 10px;
+                width: 100%;
+                height: auto;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: .5;
+                    transition: .5s all;
+                }
+            }
+        }   
+    }
+
+//  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+@media screen and (min-width:750px) {
+    & {
+        position: relative;
+        width: 100%;
+        height: auto;
+        background: #EFEFEF;
+        padding: 70px 5%;
+
+        & .sp-text {
+            & .sp-text-top {
+                font-weight: 700;
+                font-size: 3.5rem;
+                padding-left: 5%;
+                padding: 0px 0 60px 0;
+                font-family: 'Poppins', sans-serif;
+            }
+        }
+
+
+
+        & .service-plan-list-all {
+
+            & .service-plan-list {
+                & img {
+                    border-radius: 10px;
+                    width: 30%;
+                    height: auto;
+                    cursor: pointer;
+
+                    &:hover {
+                        opacity: .5;
+                        transition: .5s all;
+                    }
+                }
+            }   
+        }
+    }
+}
+
+}
+
+
+
+
+// ここからコンタクトcontactセクションの記述
+
+.contact {
+    text-align: center;
+
+    & .contact-1 {
+        position: relative;
+        border: $cNavy 2px solid;
+        padding: 20px 30px;
+        margin: 30px 20px;
+        font-size: 30px;
+        font-weight: 700;
+
+        &::before {
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 25px;
+            top: -2.3px;
+            left: -2px;
+            background: $cWhite;
+            border-top: $cWhite 3px solid;
+            border-right: $cNavy 2px solid;
+            border-left: $cWhite 2px solid;
+            border-bottom: $cNavy 2px solid;
+        }
+        &::after {
+            position: absolute;
+            content: '';
+            width: 25px;
+            height: 25px;
+            bottom: -3px;
+            right: -2px;
+            background: $cWhite;
+            border-top: $cNavy 2px solid;
+            border-right: $cWhite 2px solid;
+            border-left: $cNavy 2px solid;
+            border-bottom: $cWhite 4px solid;
+        }
+
+        &:nth-child(2) {
+            background: $cNavy;
+            color: $cWhite;
+        }
+        & span {
+            font-size: 18px;
+            font-weight: 500;
+
+        }
+    }
+
+    //  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+    @media screen and (min-width:750px) {
+        &.contact {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        
+            & .contact-1 {
+                width: 40%;
+                position: relative;
+                border: $cNavy 2px solid;
+                padding: 20px 30px;
+                margin: 100px 20px;
+                font-size: 30px;
+                font-weight: 700;
+        
+                &::before {
+                    position: absolute;
+                    content: '';
+                    width: 25px;
+                    height: 25px;
+                    top: -2.3px;
+                    left: -2px;
+                    background: $cWhite;
+                    border-top: $cWhite 3px solid;
+                    border-right: $cNavy 2px solid;
+                    border-left: $cWhite 2px solid;
+                    border-bottom: $cNavy 2px solid;
+                }
+                &::after {
+                    position: absolute;
+                    content: '';
+                    width: 25px;
+                    height: 25px;
+                    bottom: -3px;
+                    right: -2px;
+                    background: $cWhite;
+                    border-top: $cNavy 2px solid;
+                    border-right: $cWhite 2px solid;
+                    border-left: $cNavy 2px solid;
+                    border-bottom: $cWhite 4px solid;
+                }
+        
+                &:nth-child(2) {
+                    background: $cNavy;
+                    color: $cWhite;
+                }
+                & span {
+                    font-size: 18px;
+                    font-weight: 500;
+        
+                }
+            }
+        }
+    }
+}
+// ここからバックボタンの記述・・・・・・・・・・・・
+.back-top {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    bottom: 15px;
+    right: 15px;
+    background-color: #22222291;
+    transform: rotate(-90deg);
+    opacity: 0;
+    transition: opacity 1s;
+    z-index: 9999;
+
+    &::before {
+        position: absolute;
+        content: '>';
+        width: 50px;
+        height: 50px;
+        font-size: 50px;
+        top: -2px;
+        left: 27px;
+        color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+
+
+
+.foot {
+    width: 100%;
+    height: 250px;
+    background: $cBlack;
+    position: relative;
+
+    & img {
+        display: block;
+        width: 40%;
+        margin: 0 auto;
+        transform: translateY(40px);
+    }
+
+    & p {
+        color: $cWhite;
+        position: absolute;
+        bottom: 20px;
+        left: 35%;
+    }
+
+//  ・・・・・・・・ここからPC版の記述・・・・・・・・・・・・・・・
+
+@media screen and (min-width:750px) {
+    &.foot {
+        width: 100%;
+        height: 100px;
+        background: $cBlack;
+        position: relative;
+    
+        & img {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            transform: translateY(40px);
+        }
+    
+        & p {
+            color: $cWhite;
+            position: absolute;
+            bottom: 20px;
+            left: 45%;
+        }
+    }
+}    
+}
